@@ -20,11 +20,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#goBack" text="Retour" />
             <Region HBox.hgrow="ALWAYS" />
-            <Label styleClass="section-title" text="Gestion des Utilisateurs">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
+            <Label styleClass="section-title" text="Gestion des Utilisateurs" />
             <Region HBox.hgrow="ALWAYS" />
             <Button mnemonicParsing="false" onAction="#switchToCreateUser" text="Créer un utilisateur" />
          </children>

@@ -79,6 +79,26 @@
     -fx-background-color: #AED6F1; /* Ligne sélectionnée bleu clair */
 }
 
+/* Style pour les lignes en retard dans le tableau des réservations */
+.table-row-cell.overdue-row {
+    -fx-background-color: #F5B7B1; /* Rouge clair pour indiquer un retard */
+}
+
+/* S'assure que la sélection sur une ligne en retard reste visible */
+.table-row-cell.overdue-row:selected {
+    -fx-background-color: #E74C3C; /* Rouge plus foncé lors de la sélection */
+}
+
+/* Style pour les exemplaires non disponibles dans le tableau de stock */
+.table-row-cell.unavailable-row {
+    -fx-background-color: #F5B7B1; /* Rouge clair pour indiquer non disponible */
+}
+
+/* S'assure que la sélection sur une ligne non disponible reste visible */
+.table-row-cell.unavailable-row:selected {
+    -fx-background-color: #E74C3C; /* Rouge plus foncé lors de la sélection */
+}
+
 /* Style pour les champs de saisie */
 .text-field, .password-field, .text-area, .combo-box {
     -fx-border-color: #BDC3C7;
@@ -91,4 +111,10 @@
 .label {
     -fx-text-fill: #2C3E50; /* Texte sombre par défaut */
     -fx-font-weight: bold;
+}
+
+/* Style pour les champs de saisie invalides */
+.invalid-field {
+    -fx-border-color: #E74C3C; /* Rouge */
+    -fx-border-width: 1.5px;
 }

@@ -19,11 +19,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#goBack" text="Retour" />
             <Region HBox.hgrow="ALWAYS" />
-            <Label styleClass="section-title" text="Gestion des Auteurs">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
+            <Label styleClass="section-title" text="Gestion des Auteurs" />
             <Region HBox.hgrow="ALWAYS" />
             <Button mnemonicParsing="false" onAction="#switchToCreate" text="Ajouter un auteur" />
          </children>

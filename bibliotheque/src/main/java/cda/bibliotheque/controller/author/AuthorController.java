@@ -8,12 +8,14 @@ import cda.bibliotheque.model.Author;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 
@@ -31,6 +33,9 @@ public class AuthorController {
     @FXML
     private TableColumn<Author, Void> colActions;
 
+    @FXML
+    private TextField searchField;
+
     private final ObservableList<Author> authorList = FXCollections.observableArrayList();
     private final AuthorDAO authorDAO = new AuthorDAO();
 
@@ -46,14 +51,17 @@ public class AuthorController {
             {
                 buttonDelete.setOnAction(event -> {
                     Author author = getTableView().getItems().get(getIndex());
-                    authorDAO.deleteAuthor(author.getId());
-                    loadAuthors();
+                    boolean confirmed = App.showConfirmationDialog("Confirmation de suppression", "Êtes-vous sûr de vouloir supprimer l'auteur " + author.getFirstname() + " " + author.getLastname() + " ?");
+                    if (confirmed) {
+                        authorDAO.deleteAuthor(author.getId());
+                        loadAuthors();
+                    }
                 });
                 buttonEdit.setOnAction(event -> {
                     int index = getIndex();
                     Author authorToEdit = AuthorTable.getItems().get(index);
                     try {
-                        FXMLLoader loader = new FXMLLoader(App.class.getResource("authors/edit-author.fxml"));
+                        FXMLLoader loader = new FXMLLoader(App.class.getResource("/cda/bibliotheque/authors/edit-author.fxml"));
                         Parent parent = loader.load();
                         EditAuthorController controller = loader.getController();
                         controller.setAuthor(authorToEdit);
@@ -77,6 +85,23 @@ public class AuthorController {
 
         });
         loadAuthors();
+
+        // Logique de recherche
+        if (searchField != null) {
+            FilteredList<Author> filteredData = new FilteredList<>(authorList, p -> true);
+            searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(author -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    return (author.getFirstname() + " " + author.getLastname()).toLowerCase().contains(lowerCaseFilter);
+                });
+            });
+            AuthorTable.setItems(filteredData);
+        } else {
+            AuthorTable.setItems(authorList);
+        }
     }
 
     @FXML
@@ -90,7 +115,6 @@ public class AuthorController {
 
     private void loadAuthors() {
         authorList.setAll(authorDAO.getAllAuthors());
-        AuthorTable.setItems(authorList);
     }
 
 }

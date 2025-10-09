@@ -19,6 +19,9 @@
       <Button fx:id="authorsButton" maxWidth="Infinity" onAction="#switchToSecondary" text="Voir les auteurs" />
       <Button fx:id="mediasButton" maxWidth="Infinity" onAction="#switchToMedias" text="Voir les médias" />
       <Button fx:id="usersButton" maxWidth="Infinity" onAction="#switchToUsers" text="Voir les utilisateurs" />
+      <Button fx:id="reservationsButton" maxWidth="Infinity" onAction="#switchToReservations" text="Voir les réservations" />
+      <Button fx:id="categoriesButton" maxWidth="Infinity" onAction="#switchToCategories" text="Gérer les catégories" />
+      <Button fx:id="stockButton" maxWidth="Infinity" onAction="#switchToStock" text="Gérer le stock" />
    </children>
    <padding>
       <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />

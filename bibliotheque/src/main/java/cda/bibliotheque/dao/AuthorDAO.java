@@ -37,6 +37,26 @@ public class AuthorDAO {
         return authors;
     }
 
+    public Author getAuthorById(int authorId) {
+        String sql = "SELECT id, firstname, lastname FROM author WHERE id = ?;";
+        Author author = null;
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, authorId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String firstname = resultSet.getString("firstname");
+                    String lastname = resultSet.getString("lastname");
+                    author = new Author(id, firstname, lastname);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération de l'auteur : " + e.getMessage());
+        }
+        return author;
+    }
+
     public void addAuthor(Author author) {
         String sql = "INSERT INTO author (firstname, lastname) VALUES (?, ?);";
 

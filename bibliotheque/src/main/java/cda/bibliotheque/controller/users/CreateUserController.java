@@ -35,11 +35,11 @@ public class CreateUserController {
         String userName = inputUserName.getText();
         String mail = inputMail.getText();
         String password = inputPassword.getText();
-        int phoneNumber = Integer.parseInt(inputPhoneNumber.getText());
+        String phoneNumber = inputPhoneNumber.getText();
         boolean isAdmin = isAdminCheckbox.isSelected();
 
         // Note: Vous devrez peut-être ajuster le constructeur de votre classe User
-        User newUser = new User(userName, password, isAdmin, mail, phoneNumber);
+        User newUser = new User(userName, password, isAdmin, mail, String.valueOf(phoneNumber));
         usersDAO.addUser(newUser);
 
         // Revenir à la liste des utilisateurs après la création

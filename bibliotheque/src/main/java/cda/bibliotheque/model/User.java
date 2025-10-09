@@ -6,7 +6,7 @@ public class User {
     private String password;
     private Boolean is_admin;
     private String mail;
-    private int phone_number;
+    private String phone_number;
 
     public User(){
 
@@ -14,18 +14,27 @@ public class User {
 
     public User( String user_name, Boolean is_admin, String mail, int phone_number){
         this.user_name = user_name;
-        this.is_admin = is_admin;
-        this.mail = mail;
-        this.phone_number = phone_number;
+        this.is_admin = is_admin; 
+        this.mail = mail; 
+        this.phone_number = String.valueOf(phone_number); // Pour la compatibilité
     }
 
-    public User(String user_name, String password, Boolean is_admin, String mail, int phone_number) {
+    public User(String user_name, String password, Boolean is_admin, String mail, String phone_number) {
         this.user_name = user_name;
         this.password = password;
         this.is_admin = is_admin;
         this.mail = mail;
         this.phone_number = phone_number;
     }
+
+    public User(int id, String user_name, Boolean is_admin, String mail, String phone_number) {
+        this.id = id;
+        this.user_name = user_name;
+        this.is_admin = is_admin;
+        this.mail = mail;
+        this.phone_number = phone_number;
+    }
+
     public int getId(){
         return id;
     }
@@ -55,13 +64,13 @@ public class User {
     public String getMail(){
         return mail;
     }
-    public void setMail(String mail){
+    public void setMail(String mail) {
         this.mail = mail;
     }
-    public int getPhone_number(){
+    public String getPhone_number(){
         return phone_number;
     }
-    public void setPhone_number(int phone_number){
+    public void setPhone_number(String phone_number){
         this.phone_number = phone_number;
     }
 

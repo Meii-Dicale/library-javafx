@@ -39,7 +39,7 @@ public class EditUserController {
             if (newUser != null) {
                 inputUserName.setText(newUser.getUser_name());
                 inputMail.setText(newUser.getMail());
-                inputPhoneNumber.setText(String.valueOf(newUser.getPhone_number()));
+                inputPhoneNumber.setText(newUser.getPhone_number());
                 isAdminCheckbox.setSelected(newUser.getIs_admin());
             }
         });
@@ -50,7 +50,7 @@ public class EditUserController {
         User userToUpdate = user.get();
         userToUpdate.setUser_name(inputUserName.getText());
         userToUpdate.setMail(inputMail.getText());
-        userToUpdate.setPhone_number(Integer.parseInt(inputPhoneNumber.getText()));
+        userToUpdate.setPhone_number(inputPhoneNumber.getText());
         userToUpdate.setIs_admin(isAdminCheckbox.isSelected());
 
         usersDAO.updateUser(userToUpdate);

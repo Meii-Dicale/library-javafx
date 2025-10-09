@@ -2,8 +2,10 @@ package cda.bibliotheque.controller.media;
 
 import java.io.IOException;
 
+import cda.bibliotheque.dao.AuthorDAO;
 import cda.bibliotheque.App;
 import cda.bibliotheque.dao.MediaDAO;
+import cda.bibliotheque.model.Author;
 import cda.bibliotheque.model.Media;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -16,6 +18,7 @@ public class EditMediaController {
 
     private final ObjectProperty<Media> media = new SimpleObjectProperty<>();
     private final MediaDAO mediaDAO = new MediaDAO();
+    private final AuthorDAO authorDAO = new AuthorDAO();
 
     public EditMediaController() {
 
@@ -50,7 +53,7 @@ public class EditMediaController {
                 inputEdition.setText(newValue.getEdition());
                 inputYear.setText(String.valueOf(newValue.getYear()));
                 inputSummary.setText(newValue.getSummary());
-                inputAuthor.setText(String.valueOf(newValue.getAuthor_id()));
+                inputAuthor.setText(String.valueOf(newValue.getAuthor().getId()));
             }
         });
 
@@ -63,7 +66,11 @@ public class EditMediaController {
         newMedia.setEdition(inputEdition.getText());
         newMedia.setYear(Integer.parseInt(inputYear.getText()));
         newMedia.setSummary(inputSummary.getText());
-        newMedia.setAuthor_id(Integer.parseInt(inputAuthor.getText()));
+        
+        int authorId = Integer.parseInt(inputAuthor.getText());
+        Author author = authorDAO.getAuthorById(authorId); // Assuming getAuthorById exists
+        newMedia.setAuthor(author);
+
         mediaDAO.updateMedia(newMedia);
         App.setRoot("medias/medias");
     }

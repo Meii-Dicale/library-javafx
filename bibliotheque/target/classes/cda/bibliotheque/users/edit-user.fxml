@@ -20,10 +20,7 @@
       <HBox alignment="CENTER_LEFT" spacing="10.0">
          <children>
             <Button mnemonicParsing="false" onAction="#goBack" text="Retour" />
-            <Label styleClass="section-title" text="Modification d'un utilisateur" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
+            <Label styleClass="section-title" text="Modification d'un utilisateur">
                <HBox.margin>
                   <Insets left="90.0" />
                </HBox.margin>

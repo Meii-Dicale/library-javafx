@@ -19,11 +19,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#goBack" text="Retour" />
             <Region HBox.hgrow="ALWAYS" />
-            <Label styleClass="section-title" text="Gestion des Médias">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
+            <Label styleClass="section-title" text="Gestion des Médias" />
             <Region HBox.hgrow="ALWAYS" />
             <Button mnemonicParsing="false" onAction="#switchToCreateMedia" text="Ajouter un média" />
          </children>
@@ -39,6 +35,7 @@
             <TableColumn fx:id="colEdition" text="Edition" />
             <TableColumn fx:id="colYear" text="Année" />
             <TableColumn fx:id="colAuthor" text="Auteur" />
+            <TableColumn fx:id="colCategories" text="Catégories" />
             <TableColumn fx:id="colActions" text="Actions" />
          </columns>
          <columnResizePolicy>
