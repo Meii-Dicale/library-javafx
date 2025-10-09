@@ -10,7 +10,8 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cda.bibliotheque.controller.media.MediaController">
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cda.bibliotheque.controller.users.UsersController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
@@ -19,13 +20,13 @@
          <children>
             <Button mnemonicParsing="false" onAction="#goBack" text="Retour" />
             <Region HBox.hgrow="ALWAYS" />
-            <Label styleClass="section-title" text="Gestion des Médias">
+            <Label styleClass="section-title" text="Gestion des Utilisateurs">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <Region HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" onAction="#switchToCreateMedia" text="Ajouter un média" />
+            <Button mnemonicParsing="false" onAction="#switchToCreateUser" text="Créer un utilisateur" />
          </children>
          <BorderPane.margin>
             <Insets bottom="20.0" />
@@ -33,12 +34,11 @@
       </HBox>
    </top>
    <center>
-      <TableView fx:id="tableMedia" prefHeight="313.0" prefWidth="574.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableUser" prefHeight="200.0" prefWidth="443.0" BorderPane.alignment="CENTER">
          <columns>
-            <TableColumn fx:id="colTitle" text="Titre " />
-            <TableColumn fx:id="colEdition" text="Edition" />
-            <TableColumn fx:id="colYear" text="Année" />
-            <TableColumn fx:id="colAuthor" text="Auteur" />
+            <TableColumn fx:id="colUserName" text="Nom" />
+            <TableColumn fx:id="colMail" text="Mail" />
+            <TableColumn fx:id="colPhone" text="Téléphone" />
             <TableColumn fx:id="colActions" text="Actions" />
          </columns>
          <columnResizePolicy>

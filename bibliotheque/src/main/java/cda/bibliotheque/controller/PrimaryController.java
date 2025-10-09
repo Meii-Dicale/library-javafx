@@ -16,4 +16,9 @@ public class PrimaryController {
     private void switchToMedias() throws IOException {
         App.setRoot("medias/medias");
     }
+
+    @FXML
+    private void switchToUsers() throws IOException {
+        App.setRoot("users/users");
+    }
 }

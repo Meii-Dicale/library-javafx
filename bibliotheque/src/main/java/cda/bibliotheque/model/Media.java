@@ -7,17 +7,39 @@ public class Media {
     private int year;
     private String summary;
     private int author_id;
+    private Author author;
+
 
     public Media(){};
 
-    public Media(String title, String edition, int year, String summary, int author_id){
+    public Media(String title, String edition, int year, String summary,  Author author){
+        this.title = title;
+        this.edition = edition;
+        this.year = year;
+        this.summary = summary;
+        this.author = author;
+    }
+
+    public Media(String title, String edition, int year, String summary, int author_id ){
         this.title = title;
         this.edition = edition;
         this.year = year;
         this.summary = summary;
         this.author_id = author_id;
-
     }
+
+
+
+    public void setAuthor(Author author){
+        this.author = author;
+    }
+
+    public Author getAuthor(){
+        return author;
+    }
+
+
+
     public int getId(){
         return id;
     }

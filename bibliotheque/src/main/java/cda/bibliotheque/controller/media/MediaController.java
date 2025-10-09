@@ -4,13 +4,11 @@ import java.io.IOException;
 
 import cda.bibliotheque.App;
 import cda.bibliotheque.dao.MediaDAO;
-import cda.bibliotheque.model.Author;
 import cda.bibliotheque.model.Media;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,7 +27,7 @@ public class MediaController {
     private TableColumn<Media, Void> colActions;
 
     @FXML
-    private TableColumn<Media, Integer> colAuthor;
+    private TableColumn<Media, String> colAuthor;
 
     @FXML
     private TableColumn<Media, String> colEdition;
@@ -48,7 +46,7 @@ public class MediaController {
         colTitle.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         colEdition.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEdition()));
         colYear.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getYear()).asObject());
-        colAuthor.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAuthor_id()).asObject());
+        colAuthor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAuthor().getFirstname() + " " + cellData.getValue().getAuthor().getLastname()));
         colActions.setCellFactory(cellData -> new TableCell<>() {
             private final Button buttonDelete = new Button("Delete");
             private final Button buttonEdit = new Button("Edit");

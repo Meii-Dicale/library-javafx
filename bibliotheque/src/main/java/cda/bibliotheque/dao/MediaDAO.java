@@ -1,5 +1,6 @@
 package cda.bibliotheque.dao;
 
+import cda.bibliotheque.model.Author;
 import cda.bibliotheque.model.Media;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +20,8 @@ public class MediaDAO {
 
     public List<Media> getAllMedias() {
         List<Media> medias = new ArrayList<>();
-        String sql = "SELECT id, title, edition, year, summary, author_id FROM media;";
+
+        String sql = "SELECT media.id, media.title, media.edition, media.year, media.summary, media.author_id, author.firstname, author.lastname FROM media JOIN author ON media.author_id = author.id;";
         try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 Media media = new Media();
@@ -28,9 +30,13 @@ public class MediaDAO {
                 media.setEdition(resultSet.getString("edition"));
                 media.setYear(resultSet.getInt("year"));
                 media.setSummary(resultSet.getString("summary"));
-                media.setAuthor_id(resultSet.getInt("author_id"));
+                Author author = new Author();
+                author.setFirstname(resultSet.getString("firstname"));
+                author.setLastname(resultSet.getString("lastname"));
+                media.setAuthor(author);
                 medias.add(media);
             }
+
 
         } catch (SQLException e) {
             System.err.println("Erreur lors de la récupération des médias :" + e);

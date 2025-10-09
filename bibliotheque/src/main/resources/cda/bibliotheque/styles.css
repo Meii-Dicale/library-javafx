@@ -1,0 +1,94 @@
+/* styles.css */
+
+/* Style général pour toutes les fenêtres */
+/* Nous utilisons une couleur de fond ET une image. La couleur sera visible si l'image ne se charge pas. */
+.root {
+    -fx-background-color: #2c3e50; /* Couleur de secours */
+    -fx-background-image: url("https://cdn.paris.fr/paris/2022/01/25/original-059ed58576253212cbf1399919167abf.jpg");
+    -fx-background-size: cover; /* L'image couvre toute la fenêtre */
+    -fx-background-position: center center;
+    -fx-font-family: "System";
+}
+
+/* Style pour les titres principaux */
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2C3E50; /* Bleu ardoise foncé */
+}
+
+/* Style pour les titres de section */
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF; /* Texte blanc pour contraster avec le fond */
+    -fx-background-color: rgba(238, 239, 241, 0.7); /* Fond bleu ardoise semi-transparent */
+    -fx-padding: 5 10 5 10; /* Marge intérieure pour aérer le texte */
+    -fx-background-radius: 5; /* Bords arrondis */
+}
+
+/* Style général des boutons */
+.button {
+    -fx-background-color: #3498DB; /* Bleu vif */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5; /* Bords arrondis */
+    -fx-padding: 8 15 8 15;
+    -fx-cursor: hand; /* Curseur main au survol */
+}
+
+.button:hover {
+    -fx-background-color: #2980B9; /* Bleu plus foncé au survol */
+}
+
+/* Style spécifique pour les boutons de suppression */
+.button-delete {
+    -fx-background-color: #E74C3C; /* Rouge */
+}
+.button-delete:hover {
+    -fx-background-color: #C0392B; /* Rouge plus foncé */
+}
+
+/* Style pour les tableaux */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #BDC3C7; /* Bordure grise claire */
+    -fx-border-radius: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #3498DB; /* En-tête bleu */
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #F0EBE3; /* Un beige/marron très clair */
+    -fx-opacity: 0.9;
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: #E4EFE7; /* Un vert très clair et doux */
+    -fx-opacity: 0.9;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #AED6F1; /* Ligne sélectionnée bleu clair */
+}
+
+/* Style pour les champs de saisie */
+.text-field, .password-field, .text-area, .combo-box {
+    -fx-border-color: #BDC3C7;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-opacity: 0.9;
+}
+
+/* Style pour les labels standards pour qu'ils soient lisibles sur le fond */
+.label {
+    -fx-text-fill: #2C3E50; /* Texte sombre par défaut */
+    -fx-font-weight: bold;
+}
