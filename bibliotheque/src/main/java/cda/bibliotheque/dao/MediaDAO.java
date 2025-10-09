@@ -13,8 +13,8 @@ public class MediaDAO {
 
     private Connection connection;
 
-    public MediaDAO(Connection connection) {
-        this.connection = connection;
+    public MediaDAO() {
+        this.connection = DatabaseConnection.getConnection();
     }
 
     public List<Media> getAllMedias() {

@@ -37,10 +37,11 @@ public class MediaController {
         colTitle.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         colEdition.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEdition()));
         colYear.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getYear()).asObject());
+        
     }
 
     @FXML
-    void switchToCreateMedia() throws IOException {
+    private void switchToCreateMedia() throws IOException {
         App.setRoot("medias/create-media");
 
     }
