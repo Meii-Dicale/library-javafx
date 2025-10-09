@@ -19,7 +19,7 @@ public class MediaDAO {
 
     public List<Media> getAllMedias() {
         List<Media> medias = new ArrayList<>();
-        String sql = "SELECT id, title, edition, year, summary, author_id FROM medias;";
+        String sql = "SELECT id, title, edition, year, summary, author_id FROM media;";
         try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 Media media = new Media();
@@ -39,7 +39,7 @@ public class MediaDAO {
     }
 
     public void addMedia(Media media) {
-        String sql = "INSERT INTO medias (title, edition, year, summary, author_id) VALUES (?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO media (title, edition, year, summary, author_id) VALUES (?, ?, ?, ?, ?);";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, media.getTitle());
             preparedStatement.setString(2, media.getEdition());
@@ -54,7 +54,7 @@ public class MediaDAO {
     }
 
     public void updateMedia(Media media) {
-        String sql = "UPDATE medias SET title = ?, edition = ?, year = ?, summary = ?, author_id = ? WHERE id = ?;";
+        String sql = "UPDATE media SET title = ?, edition = ?, year = ?, summary = ?, author_id = ? WHERE id = ?;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, media.getTitle());
             preparedStatement.setString(2, media.getEdition());
@@ -68,7 +68,7 @@ public class MediaDAO {
     }
 
     public void deleteMedia(int id) {
-        String sql = "DELETE FROM medias WHERE id = ?;";
+        String sql = "DELETE FROM media WHERE id = ?;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();

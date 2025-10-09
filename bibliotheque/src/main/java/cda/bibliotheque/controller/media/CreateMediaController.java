@@ -10,7 +10,7 @@ import javafx.scene.control.TextArea;
 
 import javafx.scene.control.TextField;
 
-public class CreateMediaControler {
+public class CreateMediaController {
     
     @FXML
     private TextField inputAuthor;

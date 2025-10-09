@@ -19,37 +19,37 @@ public class Media {
 
     }
     public int getId(){
-        return this.id;
+        return id;
     }
     public void setId(int id){
         this.id = id;
     }
     public String getTitle(){
-        return this.title;
+        return title;
     }
     public void setTitle(String title){
         this.title = title;
     }
     public String getEdition(){
-        return this.edition;
+        return edition;
     }
     public void setEdition(String edition){
         this.edition = edition;
     }
     public int getYear(){
-        return this.year;
+        return year;
     }
     public void setYear(int year){
         this.year = year;
     }
     public String getSummary(){
-        return this.summary;
+        return summary;
     }
     public void setSummary(String summary){
         this.summary = summary;
     }
     public int getAuthor_id(){
-        return this.author_id;
+        return author_id;
     }
     public void setAuthor_id(int author_id){
         this.author_id = author_id;

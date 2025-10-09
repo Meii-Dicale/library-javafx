@@ -7,6 +7,7 @@ module cda.bibliotheque {
     opens cda.bibliotheque.controller to javafx.fxml;
     opens cda.bibliotheque.controller.author to javafx.fxml;
     opens cda.bibliotheque.controller.media to javafx.fxml;
+    
     exports cda.bibliotheque;
 
 }

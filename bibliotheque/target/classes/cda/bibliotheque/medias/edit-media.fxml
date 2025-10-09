@@ -7,15 +7,15 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cda.bibliotheque.controller.media.CreateMediaController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cda.bibliotheque.controller.media.EditMediaController">
    <children>
-      <Button layoutX="252.0" layoutY="329.0" mnemonicParsing="false" onAction="#createMedia" text="Créer le média" />
+      <Button layoutX="252.0" layoutY="329.0" mnemonicParsing="false" onAction="#submit" text="Modifier le média" />
       <TextField fx:id="inputTitle" layoutX="53.0" layoutY="76.0" promptText="Titre" />
       <TextField fx:id="inputEdition" layoutX="53.0" layoutY="229.0" promptText="Edition" />
       <TextField fx:id="inputYear" layoutX="53.0" layoutY="303.0" promptText="Année de parution" />
       <TextField fx:id="inputAuthor" layoutX="53.0" layoutY="158.0" promptText="Auteur" />
       <TextArea fx:id="inputSummary" layoutX="376.0" layoutY="72.0" prefHeight="257.0" prefWidth="200.0" promptText="Résumé ..." />
-      <Label layoutX="227.0" layoutY="14.0" text="Création d'un média :" />
+      <Label layoutX="227.0" layoutY="14.0" text="Modification d'un média :" />
       <Label layoutX="53.0" layoutY="55.0" text="Titre: " />
       <Label layoutX="53.0" layoutY="141.0" text="Auteur :" />
       <Label layoutX="53.0" layoutY="212.0" text="Edition : " />

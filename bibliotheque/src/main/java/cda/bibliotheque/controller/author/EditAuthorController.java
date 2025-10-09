@@ -16,7 +16,6 @@ public class EditAuthorController {
     private final ObjectProperty<Author> author = new SimpleObjectProperty<>();
     private final AuthorDAO authorDAO = new AuthorDAO();
 
-
     public EditAuthorController() {
     }
 
@@ -39,7 +38,7 @@ public class EditAuthorController {
                 inputLastname.setText(newAuthor.getLastname());
             }
         });
-    
+
     }
 
     @FXML

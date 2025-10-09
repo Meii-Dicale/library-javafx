@@ -10,15 +10,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 
 public class AuthorController {
 
@@ -85,6 +82,10 @@ public class AuthorController {
     @FXML
     private void switchToCreate() throws IOException {
         App.setRoot("authors/create-author");
+    }
+    @FXML
+    void goBack() throws IOException {
+        App.setRoot("primary");
     }
 
     private void loadAuthors() {
