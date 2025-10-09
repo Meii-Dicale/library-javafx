@@ -160,4 +160,58 @@ public class ReservationDAO {
             }
         }
     }
+
+    public List<Reservation> getReservationsByUserId(int userId) {
+        List<Reservation> reservations = new ArrayList<>();
+        String sql = "SELECT r.id as reservation_id, r.started_at_date, r.ended_at_date, r.is_ended, " +
+                     "u.id as user_id, u.user_name, u.is_admin, u.mail, u.phone_number, " +
+                     "s.id as stock_id, s.is_available, " +
+                     "m.id as media_id, m.title " +
+                     "FROM Reservation r " +
+                     "JOIN users u ON r.user_id = u.id " +
+                     "JOIN stock s ON r.stock_id = s.id " +
+                     "JOIN media m ON s.media_id = m.id " +
+                     "WHERE r.user_id = ? " +
+                     "ORDER BY r.started_at_date DESC;";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Reservation reservation = new Reservation();
+                    reservation.setId(rs.getInt("reservation_id"));
+                    reservation.setStartedAtDate(rs.getDate("started_at_date").toLocalDate());
+                    Date endedAt = rs.getDate("ended_at_date");
+                    if (endedAt != null) {
+                        reservation.setEndedAtDate(endedAt.toLocalDate());
+                    }
+                    reservation.setEnded(rs.getBoolean("is_ended"));
+
+                    User user = new User(
+                            rs.getInt("user_id"),
+                            rs.getString("user_name"),
+                            rs.getBoolean("is_admin"),
+                            rs.getString("mail"),
+                            rs.getString("phone_number")
+                    );
+                    reservation.setUser(user);
+
+                    Media media = new Media();
+                    media.setId(rs.getInt("media_id"));
+                    media.setTitle(rs.getString("title"));
+
+                    Stock stock = new Stock();
+                    stock.setId(rs.getInt("stock_id"));
+                    stock.setAvailable(rs.getBoolean("is_available"));
+                    stock.setMedia(media);
+                    reservation.setStock(stock);
+
+                    reservations.add(reservation);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération des réservations pour l'utilisateur " + userId + " : " + e.getMessage());
+        }
+        return reservations;
+    }
 }

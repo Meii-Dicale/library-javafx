@@ -1,11 +1,11 @@
-package cda.bibliotheque.controller.users;
+package cda.bibliotheque.controller;
 
 import cda.bibliotheque.App;
+import cda.bibliotheque.controller.category.ValidationUtil;
 import cda.bibliotheque.dao.UsersDAO;
 import cda.bibliotheque.model.User;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -15,7 +15,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-public class CreateUserController {
+public class CreateAccountController {
 
     @FXML
     private TextField inputUserName;
@@ -29,43 +29,52 @@ public class CreateUserController {
     @FXML
     private PasswordField inputPassword;
 
-    @FXML
-    private CheckBox isAdminCheckbox;
-
     private final UsersDAO usersDAO = new UsersDAO();
 
     @FXML
-    void createUser(ActionEvent event) throws IOException {
+    void createAccount() throws IOException {
         String userName = inputUserName.getText();
         String mail = inputMail.getText();
-        String password = hashPassword(inputPassword.getText());
+        String password = inputPassword.getText();
         String phoneNumber = inputPhoneNumber.getText();
-        boolean isAdmin = isAdminCheckbox.isSelected();
 
-        // Le mot de passe est maintenant haché
-        User newUser = new User(userName, password, isAdmin, mail, String.valueOf(phoneNumber));
+        // Validation simple
+        if (userName.isEmpty() || mail.isEmpty() || password.isEmpty() || phoneNumber.isEmpty()) {
+            App.showAlert(Alert.AlertType.WARNING, "Champs requis", "Tous les champs sont obligatoires.");
+            return;
+        }
+
+        if (!ValidationUtil.isEmailValid(mail)) {
+            App.showAlert(Alert.AlertType.WARNING, "Email invalide", "Veuillez saisir une adresse email valide.");
+            return;
+        }
+
+        // Hachage du mot de passe
+        String hashedPassword = hashPassword(password);
+
+        // Création de l'utilisateur avec isAdmin à false par défaut
+        User newUser = new User(userName, hashedPassword, false, mail, phoneNumber);
         usersDAO.addUser(newUser);
 
-        // Revenir à la liste des utilisateurs après la création
-        App.setRoot("users/users");
+        App.showAlert(Alert.AlertType.INFORMATION, "Compte créé", "Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.");
+
+        // Revenir à la page de connexion
+        goBackToLogin();
     }
 
-    @FXML
     private String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
             return Base64.getEncoder().encodeToString(hash);
         } catch (NoSuchAlgorithmException e) {
-            // Dans une application réelle, logguer cette erreur est crucial
             System.err.println("Algorithme de hachage non trouvé : " + e.getMessage());
-            // Gérer l'erreur de manière appropriée, peut-être en empêchant la création de l'utilisateur
             throw new RuntimeException("Erreur de configuration de la sécurité.", e);
         }
     }
 
     @FXML
-    void goBack() throws IOException {
-        App.setRoot("users/users");
+    void goBackToLogin() throws IOException {
+        App.setRoot("login");
     }
 }

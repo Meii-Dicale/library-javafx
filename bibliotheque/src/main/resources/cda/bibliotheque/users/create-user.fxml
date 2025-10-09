@@ -22,7 +22,7 @@
    <top>
       <HBox alignment="CENTER_LEFT" spacing="10.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#goBack" style="-fx-background-color: #7f8c8d;" text="Retour" />
+            <Button mnemonicParsing="false" onAction="#goBack" text="Retour" />
             <Label styleClass="section-title" text="Création d'un nouvel utilisateur" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="80.0" />
@@ -35,7 +35,7 @@
       </HBox>
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: rgba(255, 255, 255, 0.8); -fx-background-radius: 10; -fx-padding: 20;">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="form-container">
          <children>
             <GridPane hgap="10.0" vgap="10.0">
                <columnConstraints>

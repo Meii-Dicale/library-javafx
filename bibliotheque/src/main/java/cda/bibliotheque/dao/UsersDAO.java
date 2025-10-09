@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UsersDAO {
     private Connection connection;
@@ -75,7 +76,27 @@ public class UsersDAO {
         }
     }
 
-
+    public Optional<User> findByEmail(String email) {
+        String sql = "SELECT id, user_name, password, is_admin, mail, phone_number FROM Users WHERE mail = ?;";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    User user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setUser_name(resultSet.getString("user_name"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setIs_admin(resultSet.getBoolean("is_admin"));
+                    user.setMail(resultSet.getString("mail"));
+                    user.setPhone_number(resultSet.getString("phone_number"));
+                    return Optional.of(user);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la recherche de l'utilisateur par email : " + e);
+        }
+        return Optional.empty();
+    }
 
 
 }

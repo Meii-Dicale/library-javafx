@@ -63,11 +63,12 @@ public class MediaController {
             return new SimpleStringProperty(categories);
         });
         colActions.setCellFactory(cellData -> new TableCell<>() {
-            private final Button buttonDelete = new Button("Delete");
-            private final Button buttonEdit = new Button("Edit");
-            private final HBox box = new HBox(buttonDelete, buttonEdit);
+            private final Button buttonDelete = new Button("Supprimer");
+            private final Button buttonEdit = new Button("Modifier");
+            private final HBox box = new HBox(10, buttonDelete, buttonEdit);
 
             {
+                buttonDelete.getStyleClass().add("button-delete");
                 buttonDelete.setOnAction(event -> {
                     Media media = getTableView().getItems().get(getIndex());
                     boolean confirmed = App.showConfirmationDialog("Confirmation de suppression", "Êtes-vous sûr de vouloir supprimer le média '" + media.getTitle() + "' ?");

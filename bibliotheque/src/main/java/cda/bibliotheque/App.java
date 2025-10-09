@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert;
 import javafx.scene.Scene;
+import cda.bibliotheque.model.User;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,10 +18,12 @@ import java.util.Optional;
 public class App extends Application {
 
     private static Scene scene;
+    private static User loggedInUser;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        // Démarrer sur la page de connexion
+        scene = new Scene(loadFXML("login"), 640, 480);
         scene.getStylesheets().add(App.class.getResource("/cda/bibliotheque/styles.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
@@ -29,6 +32,13 @@ public class App extends Application {
         return scene;
     }
 
+    public static User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public static void setLoggedInUser(User user) {
+        loggedInUser = user;
+    }
 
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
@@ -55,6 +65,11 @@ public class App extends Application {
 
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
+    }
+
+    public static void logout() throws IOException {
+        loggedInUser = null;
+        setRoot("login");
     }
 
     public static void main(String[] args) {
