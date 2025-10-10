@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cda.bibliotheque.controller.AccountController">
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="transparent-scroll-pane">
+            <padding>
+                <Insets bottom="20.0" top="20.0" />
+            </padding>
+            <content>
+                <StackPane>
+                    <VBox alignment="CENTER" maxWidth="450.0" spacing="15.0" styleClass="form-container">
+                        <children>
+                            <Text styleClass="section-title" text="Mon Compte" />
+                            <!-- Section Informations Personnelles -->
+                            <VBox spacing="5.0">
+                                <children>
+                                    <Label text="Nom d'utilisateur :" />
+                                    <TextField fx:id="inputUserName" />
+                                </children>
+                            </VBox>
+                            <VBox spacing="5.0">
+                                <children>
+                                    <Label text="Adresse email :" />
+                                    <TextField fx:id="inputMail" />
+                                </children>
+                            </VBox>
+                            <VBox spacing="5.0">
+                                <children>
+                                    <Label text="Numéro de téléphone :" />
+                                    <TextField fx:id="inputPhoneNumber" />
+                                </children>
+                            </VBox>
+                            <Button onAction="#handleUpdateInfo" text="Mettre à jour mes informations" />
+                            <Separator prefWidth="200.0">
+                                <VBox.margin>
+                                    <Insets bottom="10.0" top="20.0" />
+                                </VBox.margin>
+                            </Separator>
+                            <!-- Section Mot de passe -->
+                            <Text styleClass="subsection-title" text="Changer mon mot de passe" />
+                            <VBox spacing="5.0">
+                                <children>
+                                    <Label text="Mot de passe actuel :" />
+                                    <PasswordField fx:id="inputCurrentPassword" />
+                                </children>
+                            </VBox>
+                            <VBox spacing="5.0">
+                                <children>
+                                    <Label text="Nouveau mot de passe :" />
+                                    <PasswordField fx:id="inputNewPassword" />
+                                </children>
+                            </VBox>
+                            <VBox spacing="5.0">
+                                <children>
+                                    <Label text="Confirmer le nouveau mot de passe :" />
+                                    <PasswordField fx:id="inputConfirmPassword" />
+                                </children>
+                            </VBox>
+                            <Button onAction="#handleChangePassword" text="Changer mon mot de passe" />
+                        </children>
+                    </VBox>
+                </StackPane>
+            </content>
+        </ScrollPane>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <children>
+                <Button onAction="#goBack" styleClass="secondary-button" text="Retour au tableau de bord" />
+            </children>
+         <padding>
+            <Insets bottom="20.0" top="10.0" />
+         </padding>
+        </HBox>
+    </bottom>
+</BorderPane>

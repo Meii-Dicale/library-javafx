@@ -55,7 +55,8 @@ public class StockController {
         colActions.setCellFactory(cellData -> new TableCell<>() {
             private final Button buttonDelete = new Button("Supprimer");
             private final Button buttonEdit = new Button("Modifier");
-            private final HBox box = new HBox(10, buttonDelete, buttonEdit);
+            private final Button buttonHistory = new Button("Historique");
+            private final HBox box = new HBox(10, buttonHistory, buttonEdit, buttonDelete);
 
             {
                 buttonDelete.getStyleClass().add("button-delete");
@@ -74,6 +75,19 @@ public class StockController {
                         App.getScene().setRoot(parent);
                     } catch (IOException e) {
                         System.err.println("Erreur lors du chargement de la page de modification de stock : " + e.getMessage());
+                    }
+                });
+                buttonHistory.setOnAction(event -> {
+                    Stock stock = getTableView().getItems().get(getIndex());
+                    try {
+                        FXMLLoader loader = new FXMLLoader(App.class.getResource("/cda/bibliotheque/stock/stock-history.fxml"));
+                        Parent parent = loader.load();
+                        StockHistoryController controller = loader.getController();
+                        controller.setStockItem(stock); // Passer l'exemplaire au nouveau contrôleur
+                        App.getScene().setRoot(parent);
+                    } catch (IOException e) {
+                        System.err.println("Erreur lors du chargement de l'historique du stock : " + e.getMessage());
+                        e.printStackTrace();
                     }
                 });
             }
@@ -112,6 +126,11 @@ public class StockController {
                         return true;
                     }
                     String lowerCaseFilter = newValue.toLowerCase();
+                    // Recherche par ID (doit correspondre exactement ou commencer par)
+                    if (String.valueOf(stock.getId()).contains(newValue)) {
+                        return true;
+                    }
+                    // Recherche par titre
                     return stock.getMedia().getTitle().toLowerCase().contains(lowerCaseFilter);
                 });
             });
@@ -123,7 +142,7 @@ public class StockController {
 
     private void loadStock() {
         stockList.setAll(stockDAO.getAll());
-        // stockTable.setItems(stockList); // This is now handled by the search logic
+        stockTable.setItems(stockList);
     }
 
     @FXML

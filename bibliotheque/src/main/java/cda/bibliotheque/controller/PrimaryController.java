@@ -31,8 +31,8 @@ public class PrimaryController {
     }
 
     @FXML
-    private void switchToUsers() throws IOException {
-        App.setRoot("users/users");
+    private void switchToUsers() throws IOException { // Corrected path
+        App.setRoot("users/users"); 
     }
 
     @FXML

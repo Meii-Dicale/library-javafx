@@ -37,6 +37,28 @@ public class UsersDAO {
         return users;
     }
 
+    public List<User> getNonAdminUsers(){
+        List<User> users = new ArrayList<>();
+
+        String sql = "SELECT id, user_name, is_admin, mail, phone_number FROM Users WHERE is_admin = false;";
+        try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setUser_name(resultSet.getString("user_name"));
+                user.setIs_admin(resultSet.getBoolean("is_admin"));
+                user.setMail(resultSet.getString("mail"));
+                user.setPhone_number(resultSet.getString("phone_number"));
+                users.add(user);
+            }
+        }
+        catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération des utilisateurs non-admin : " + e);
+        }
+        return users;
+    }
+
+
     public void addUser(User user){
         String sql = "INSERT INTO Users (user_name, password, is_admin, mail, phone_number) VALUES (?, ?, ?, ?, ?);";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -62,6 +84,17 @@ public class UsersDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Erreur lors de l'update de l'utilisateur : " + e);
+        }
+    }
+
+    public void updatePassword(int userId, String newPassword) {
+        String sql = "UPDATE Users SET password = ? WHERE id = ?;";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, newPassword);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la mise à jour du mot de passe : " + e);
         }
     }
 

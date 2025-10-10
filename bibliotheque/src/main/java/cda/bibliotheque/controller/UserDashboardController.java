@@ -7,6 +7,7 @@ import cda.bibliotheque.model.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -47,6 +48,24 @@ public class UserDashboardController {
                 return new SimpleStringProperty(endDate != null ? endDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) : "En cours");
             });
 
+            // Mettre en évidence les réservations en retard
+            reservationsTable.setRowFactory(tv -> new TableRow<Reservation>() {
+                @Override
+                protected void updateItem(Reservation item, boolean empty) {
+                    super.updateItem(item, empty);
+                    getStyleClass().remove("overdue-row"); // Toujours retirer l'ancien style
+                    if (item != null && !empty) {
+                        // Une réservation est en retard si elle n'est pas terminée ET que la date de fin est passée
+                        LocalDate dueDate = item.getEndedAtDate();
+                        if (!item.isEnded() && dueDate != null && dueDate.isBefore(LocalDate.now())) {
+                            if (!getStyleClass().contains("overdue-row")) {
+                                getStyleClass().add("overdue-row");
+                            }
+                        }
+                    }
+                }
+            });
+
             // Correction du nom de la méthode
             reservationsTable.getItems().setAll(reservationDAO.getReservationsByUserId(loggedInUser.getId()));
         }
@@ -55,5 +74,10 @@ public class UserDashboardController {
     @FXML
     private void logout() throws IOException {
         App.logout();
+    }
+
+    @FXML
+    private void switchToAccount() throws IOException {
+        App.setRoot("account");
     }
 }

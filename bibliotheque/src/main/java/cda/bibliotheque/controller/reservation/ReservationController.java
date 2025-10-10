@@ -2,6 +2,7 @@ package cda.bibliotheque.controller.reservation;
 
 import cda.bibliotheque.App;
 import cda.bibliotheque.dao.ReservationDAO;
+import cda.bibliotheque.model.User;
 import cda.bibliotheque.model.Reservation;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -9,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -37,10 +39,14 @@ public class ReservationController {
     private TableColumn<Reservation, Void> colActions;
 
     @FXML
+    private ComboBox<String> statusFilterComboBox;
+
+    @FXML
     private TextField searchField;
 
     private final ObservableList<Reservation> reservationList = FXCollections.observableArrayList();
     private final ReservationDAO reservationDAO = new ReservationDAO();
+    private FilteredList<Reservation> filteredData;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @FXML
@@ -101,23 +107,67 @@ public class ReservationController {
 
         loadReservations();
 
+        // Configurer le filtre par statut
+        setupStatusFilter();
+
         // Logique de recherche
-        if (searchField != null) {
-            FilteredList<Reservation> filteredData = new FilteredList<>(reservationList, p -> true);
-            searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-                filteredData.setPredicate(reservation -> {
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true;
-                    }
-                    String lowerCaseFilter = newValue.toLowerCase();
-                    return reservation.getStock().getMedia().getTitle().toLowerCase().contains(lowerCaseFilter) ||
-                           reservation.getUser().getUser_name().toLowerCase().contains(lowerCaseFilter);
-                });
-            });
-            tableReservations.setItems(filteredData);
-        } else {
-            tableReservations.setItems(reservationList);
-        }
+        filteredData = new FilteredList<>(reservationList, p -> true);
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> updateFilter());
+        statusFilterComboBox.valueProperty().addListener((obs, oldVal, newVal) -> updateFilter());
+
+        tableReservations.setItems(filteredData);
+    }
+
+    /**
+     * Méthode publique pour filtrer les réservations pour un utilisateur spécifique.
+     * Appelée depuis l'extérieur (ex: UsersController).
+     * @param user L'utilisateur pour lequel filtrer les réservations.
+     */
+    public void filterByUser(User user) {
+        statusFilterComboBox.setValue("En cours");
+        searchField.setText(user.getUser_name());
+    }
+
+    private void setupStatusFilter() {
+        ObservableList<String> statuses = FXCollections.observableArrayList("Toutes", "En cours", "En retard", "Terminée");
+        statusFilterComboBox.setItems(statuses);
+        statusFilterComboBox.setValue("Toutes");
+    }
+
+    private void updateFilter() {
+        String searchText = searchField.getText();
+        String status = statusFilterComboBox.getValue();
+
+        filteredData.setPredicate(reservation -> {
+            // Filtre par statut
+            boolean statusMatch = false;
+            if (status == null || status.equals("Toutes")) {
+                statusMatch = true;
+            } else {
+                boolean isOverdue = !reservation.isEnded() && reservation.getEndedAtDate() != null && reservation.getEndedAtDate().isBefore(LocalDate.now());
+                switch (status) {
+                    case "En cours":
+                        statusMatch = !reservation.isEnded() && !isOverdue;
+                        break;
+                    case "En retard":
+                        statusMatch = isOverdue;
+                        break;
+                    case "Terminée":
+                        statusMatch = reservation.isEnded();
+                        break;
+                }
+            }
+
+            // Filtre par texte
+            boolean textMatch = true;
+            if (searchText != null && !searchText.isEmpty()) {
+                String lowerCaseFilter = searchText.toLowerCase();
+                textMatch = reservation.getStock().getMedia().getTitle().toLowerCase().contains(lowerCaseFilter) ||
+                            reservation.getUser().getUser_name().toLowerCase().contains(lowerCaseFilter);
+            }
+
+            return statusMatch && textMatch;
+        });
     }
 
     private void loadReservations() {

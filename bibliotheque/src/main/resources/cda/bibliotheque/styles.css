@@ -110,10 +110,33 @@
     -fx-font-weight: bold;
 }
 
+.table-row-cell.unavailable-row {
+    -fx-background-color: #eeeeee; /* Light gray for unavailable items */
+    -fx-font-style: italic;
+}
+
+.table-row-cell.overdue-row {
+    -fx-background-color: #ffcdd2; /* Light red for overdue items */
+}
+
+.table-row-cell.overdue-row:selected {
+    -fx-background-color: #e57373; /* Darker red for selection */
+}
+
+
 /* --- Containers --- */
 .form-container {
     -fx-background-color: rgba(255, 255, 255, 0.7);
     -fx-background-radius: 10;
     -fx-padding: 20;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 0);
+}
+
+/* --- ScrollPane --- */
+.transparent-scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.transparent-scroll-pane .viewport {
+    -fx-background-color: transparent;
 }

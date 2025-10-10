@@ -1,9 +1,11 @@
 package cda.bibliotheque.controller.users;
 
 import cda.bibliotheque.App;
+import cda.bibliotheque.controller.category.ValidationUtil;
 import cda.bibliotheque.dao.UsersDAO;
 import cda.bibliotheque.model.User;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
@@ -37,8 +39,32 @@ public class CreateUserController {
     @FXML
     void createUser(ActionEvent event) throws IOException {
         String userName = inputUserName.getText();
-        String mail = inputMail.getText();
-        String password = hashPassword(inputPassword.getText());
+        String mail = inputMail.getText().trim();
+        String passwordText = inputPassword.getText();
+
+        // Validation des champs
+        if (userName.isEmpty() || mail.isEmpty() || passwordText.isEmpty()) {
+            App.showAlert(Alert.AlertType.WARNING, "Champs requis", "Le nom, l'email et le mot de passe sont obligatoires.");
+            return;
+        }
+        if (!ValidationUtil.isEmailValid(mail)) {
+            App.showAlert(Alert.AlertType.WARNING, "Email invalide", "Veuillez saisir une adresse email valide.");
+            return;
+        }
+
+        // Vérifier si l'email existe déjà
+        if (usersDAO.findByEmail(mail).isPresent()) {
+            App.showAlert(Alert.AlertType.ERROR, "Email déjà utilisé", "Cette adresse email est déjà associée à un compte.");
+            return;
+        }
+
+        // Valider la force du mot de passe
+        if (!ValidationUtil.isPasswordStrong(passwordText)) {
+            App.showAlert(Alert.AlertType.WARNING, "Mot de passe faible", ValidationUtil.getPasswordPolicy());
+            return;
+        }
+
+        String password = hashPassword(passwordText);
         String phoneNumber = inputPhoneNumber.getText();
         boolean isAdmin = isAdminCheckbox.isSelected();
 

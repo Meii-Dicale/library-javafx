@@ -49,6 +49,18 @@ public class CreateAccountController {
             return;
         }
 
+        // Valider la force du mot de passe
+        if (!ValidationUtil.isPasswordStrong(password)) {
+            App.showAlert(Alert.AlertType.WARNING, "Mot de passe faible", ValidationUtil.getPasswordPolicy());
+            return;
+        }
+
+        // Vérifier si l'email existe déjà
+        if (usersDAO.findByEmail(mail).isPresent()) {
+            App.showAlert(Alert.AlertType.ERROR, "Email déjà utilisé", "Cette adresse email est déjà associée à un compte.");
+            return;
+        }
+
         // Hachage du mot de passe
         String hashedPassword = hashPassword(inputPassword.getText());
 

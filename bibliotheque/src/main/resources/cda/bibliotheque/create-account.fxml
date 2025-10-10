@@ -6,6 +6,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
@@ -39,8 +40,17 @@
                     </children>
                 </VBox>
                 <Button defaultButton="true" onAction="#createAccount" text="Créer le compte" />
-                <Button onAction="#goBackToLogin" styleClass="secondary-button" text="Retour à la connexion" />
             </children>
         </VBox>
     </center>
+    <bottom>
+        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <children>
+                <Button onAction="#goBackToLogin" styleClass="secondary-button" text="Retour à la connexion" />
+            </children>
+            <padding>
+                <Insets bottom="20.0" top="10.0" />
+            </padding>
+        </HBox>
+    </bottom>
 </BorderPane>
