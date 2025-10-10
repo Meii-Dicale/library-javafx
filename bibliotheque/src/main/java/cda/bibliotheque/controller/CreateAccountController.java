@@ -50,7 +50,7 @@ public class CreateAccountController {
         }
 
         // Hachage du mot de passe
-        String hashedPassword = hashPassword(password);
+        String hashedPassword = hashPassword(inputPassword.getText());
 
         // Création de l'utilisateur avec isAdmin à false par défaut
         User newUser = new User(userName, hashedPassword, false, mail, phoneNumber);

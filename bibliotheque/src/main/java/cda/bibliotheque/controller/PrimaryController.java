@@ -3,9 +3,22 @@ package cda.bibliotheque.controller;
 import java.io.IOException;
 
 import cda.bibliotheque.App;
+import cda.bibliotheque.model.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 public class PrimaryController {
+
+    @FXML
+    private Label welcomeLabel;
+
+    @FXML
+    public void initialize() {
+        User loggedInUser = App.getLoggedInUser();
+        if (loggedInUser != null) {
+            welcomeLabel.setText("Bienvenue, " + loggedInUser.getUser_name() + " !");
+        }
+    }
 
     @FXML
     private void switchToSecondary() throws IOException {
@@ -35,5 +48,10 @@ public class PrimaryController {
     @FXML
     private void switchToStock() throws IOException {
         App.setRoot("stock/stock");
+    }
+
+    @FXML
+    private void handleLogout() throws IOException {
+        App.logout();
     }
 }

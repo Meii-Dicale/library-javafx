@@ -3,27 +3,29 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<?import javafx.scene.text.Font?>
-<VBox alignment="CENTER" prefHeight="490.0" prefWidth="530.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cda.bibliotheque.controller.PrimaryController">
-   <children>
-      <Label styleClass="title-label" text="Menu Principal">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-         <VBox.margin>
-            <Insets bottom="20.0" />
-         </VBox.margin>
-      </Label>
-      <Button fx:id="authorsButton" maxWidth="Infinity" onAction="#switchToSecondary" text="Voir les auteurs" />
-      <Button fx:id="mediasButton" maxWidth="Infinity" onAction="#switchToMedias" text="Voir les médias" />
-      <Button fx:id="usersButton" maxWidth="Infinity" onAction="#switchToUsers" text="Voir les utilisateurs" />
-      <Button fx:id="reservationsButton" maxWidth="Infinity" onAction="#switchToReservations" text="Voir les réservations" />
-      <Button fx:id="categoriesButton" maxWidth="Infinity" onAction="#switchToCategories" text="Gérer les catégories" />
-      <Button fx:id="stockButton" maxWidth="Infinity" onAction="#switchToStock" text="Gérer le stock" />
-   </children>
-   <padding>
-      <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
-   </padding>
-</VBox>
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cda.bibliotheque.controller.PrimaryController">
+    <center>
+        <VBox alignment="CENTER" maxWidth="400.0" spacing="15.0" styleClass="form-container">
+            <children>
+                <Label fx:id="welcomeLabel" styleClass="welcome-text" />
+                <Text styleClass="section-title" text="Tableau de bord Administrateur" />
+                <Button maxWidth="Infinity" onAction="#switchToUsers" text="Gérer les utilisateurs" />
+                <Button maxWidth="Infinity" onAction="#switchToMedias" text="Gérer les médias" />
+                <Button maxWidth="Infinity" onAction="#switchToCategories" text="Gérer les catégories" />
+                <Button maxWidth="Infinity" onAction="#switchToStock" text="Gérer le stock" />
+                <Button maxWidth="Infinity" onAction="#switchToReservations" text="Gérer les réservations" />
+                <Button maxWidth="Infinity" onAction="#switchToSecondary" text="Gérer les auteurs" />
+                <VBox alignment="CENTER" prefHeight="80.0">
+                    <padding>
+                        <Insets top="20.0" />
+                    </padding>
+                    <Button onAction="#handleLogout" styleClass="button-delete" text="Se déconnecter" />
+                </VBox>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

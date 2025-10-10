@@ -181,10 +181,8 @@ public class ReservationDAO {
                     Reservation reservation = new Reservation();
                     reservation.setId(rs.getInt("reservation_id"));
                     reservation.setStartedAtDate(rs.getDate("started_at_date").toLocalDate());
-                    Date endedAt = rs.getDate("ended_at_date");
-                    if (endedAt != null) {
-                        reservation.setEndedAtDate(endedAt.toLocalDate());
-                    }
+                    Date endedAtDate = rs.getDate("ended_at_date");
+                    reservation.setEndedAtDate(endedAtDate != null ? endedAtDate.toLocalDate() : null);
                     reservation.setEnded(rs.getBoolean("is_ended"));
 
                     User user = new User(

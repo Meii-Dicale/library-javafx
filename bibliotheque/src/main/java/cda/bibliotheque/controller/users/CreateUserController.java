@@ -43,14 +43,13 @@ public class CreateUserController {
         boolean isAdmin = isAdminCheckbox.isSelected();
 
         // Le mot de passe est maintenant haché
-        User newUser = new User(userName, password, isAdmin, mail, String.valueOf(phoneNumber));
+        User newUser = new User(userName, password, isAdmin, mail, phoneNumber);
         usersDAO.addUser(newUser);
 
         // Revenir à la liste des utilisateurs après la création
         App.setRoot("users/users");
     }
 
-    @FXML
     private String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

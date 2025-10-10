@@ -5,14 +5,13 @@ import cda.bibliotheque.dao.ReservationDAO;
 import cda.bibliotheque.model.Reservation;
 import cda.bibliotheque.model.User;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class UserDashboardController {
@@ -33,7 +32,6 @@ public class UserDashboardController {
     private TableColumn<Reservation, String> colEndDate;
 
     private final ReservationDAO reservationDAO = new ReservationDAO();
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @FXML
     public void initialize() {
@@ -41,25 +39,21 @@ public class UserDashboardController {
         if (loggedInUser != null) {
             welcomeLabel.setText("Bienvenue, " + loggedInUser.getUser_name() + " !");
 
+            // Utiliser des CellValueFactory personnalisées pour un affichage correct
             colMediaTitle.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStock().getMedia().getTitle()));
-            colStartDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStartedAtDate().format(formatter)));
-            colEndDate.setCellValueFactory(cellData -> new SimpleStringProperty(
-                    cellData.getValue().getEndedAtDate() != null ? cellData.getValue().getEndedAtDate().format(formatter) : "N/A"
-            ));
+            colStartDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStartedAtDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+            colEndDate.setCellValueFactory(cellData -> {
+                LocalDate endDate = cellData.getValue().getEndedAtDate();
+                return new SimpleStringProperty(endDate != null ? endDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) : "En cours");
+            });
 
-            // Charger uniquement les réservations de l'utilisateur connecté
-            ObservableList<Reservation> userReservations = FXCollections.observableArrayList(reservationDAO.getReservationsByUserId(loggedInUser.getId()));
-            reservationsTable.setItems(userReservations);
+            // Correction du nom de la méthode
+            reservationsTable.getItems().setAll(reservationDAO.getReservationsByUserId(loggedInUser.getId()));
         }
     }
 
     @FXML
-    private void logout() {
-        try {
-            App.setLoggedInUser(null);
-            App.setRoot("login");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void logout() throws IOException {
+        App.logout();
     }
 }

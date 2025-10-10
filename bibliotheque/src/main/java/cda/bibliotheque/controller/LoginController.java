@@ -56,9 +56,13 @@ public class LoginController {
                     errorLabel.setText("Erreur de chargement de la page.");
                 }
             } else {
+                System.err.println("Login failed: Password mismatch for user: " + email);
+                System.err.println("  - Entered (hashed): " + hashedPassword);
+                System.err.println("  - Stored (hashed):  " + user.getPassword());
                 errorLabel.setText("Email ou mot de passe incorrect.");
             }
         } else {
+            System.err.println("Login failed: No user found with email: " + email);
             errorLabel.setText("Email ou mot de passe incorrect.");
         }
     }
